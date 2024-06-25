@@ -23,20 +23,27 @@ def embed_code(code):
 def calculate_similarity(code1, code2):
     vec1 = embed_code(code1)
     vec2 = embed_code(code2)
-    similarity = F.cosine_similarity(vec1, vec2)
+    # 归一化嵌入向量
+    norm_vec1 = torch.nn.functional.normalize(vec1, p=2, dim=1)
+    norm_vec2 = torch.nn.functional.normalize(vec2, p=2, dim=1)
+    # 计算余弦相似度
+    similarity = torch.einsum("ac,bc->ab", norm_vec1, norm_vec2)
     return similarity.item()
 
-# 示例代码
+# 示例 Java 代码
 code1 = """
-
-            if (taskList == null || taskList.size() == 0) {
-                log.info(\"<------------------ 没有选择该流水线配置分类执行：{} ---------------------->\", testName);
-                continue;
+            int remain = length;
+            int readOnce;
+            while (remain > 0 && (readOnce = raf.read(buf, 0, Math.min(remain, buf.length))) != -1) {
+                os.write(buf, 0, readOnce);
+                remain -= readOnce;
             }
+           
 """
 
 code2 = """
-            // 获取该配置分类下原先配置的task
+            int len = 0;
+            int totalLen = 0;
 """
 
 # 计算相似度
