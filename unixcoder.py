@@ -8,7 +8,7 @@ import os
 
 
 class UniXcoder(nn.Module):
-    def __init__(self, model_name, local_model_path='~/.cache/huggingface/transformers'):
+    def __init__(self, model_name, local_model_path):
         """
             Build UniXcoder.
 

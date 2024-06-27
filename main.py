@@ -1,7 +1,6 @@
 import os
 import torch
 from unixcoder import UniXcoder
-import torch.nn.functional as F
 
 # 设置设备
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -33,20 +32,20 @@ def calculate_similarity(code1, code2):
     return similarity.item()
 
 
-# 示例 Java 代码
+# 示例 Java 代码Shadows name 'code1' from outer scope
 code1 = """
-            int remain = length;
-            int readOnce;
-            while (remain > 0 && (readOnce = raf.read(buf, 0, Math.min(remain, buf.length))) != -1) {
-                os.write(buf, 0, readOnce);
-                remain -= readOnce;
-            }
+    int remain = length;
+    int readonce;
+    while (remain > 0 && (readonce = raf.read(buf, 0, math.min(remain, buf.length))) != -1) {
+        os.write(buf, 0, readonce);
+        remain -= readonce;
+    }
            
 """
 
 code2 = """
-            int len = 0;
-            int totalLen = 0;
+    int len = 0;
+    int totalLen = 0;
 """
 
 # 计算相似度
