@@ -10,8 +10,9 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 cache_dir = os.path.expanduser("~/.cache/huggingface/transformers")
 
 # 加载 UniXcoder 模型
-model = UniXcoder("microsoft/unixcoder-base")
+model = UniXcoder("microsoft/unixcoder-base", cache_dir)
 model.to(device)
+
 
 def embed_code(code):
     # 将代码进行编码
@@ -19,6 +20,7 @@ def embed_code(code):
     source_ids = torch.tensor(tokens_ids).to(device)
     _, code_embedding = model(source_ids)
     return code_embedding
+
 
 def calculate_similarity(code1, code2):
     vec1 = embed_code(code1)
@@ -29,6 +31,7 @@ def calculate_similarity(code1, code2):
     # 计算余弦相似度
     similarity = torch.einsum("ac,bc->ab", norm_vec1, norm_vec2)
     return similarity.item()
+
 
 # 示例 Java 代码
 code1 = """
